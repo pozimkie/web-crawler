@@ -12,5 +12,7 @@ mvn clean compile test assembly:single
 
 ## Run
 ```bash
-java -jar target/web-crawler-1.0-SNAPSHOT-jar-with-dependencies.jar https://www.wiprodigital.com
+java -jar target/web-crawler-1.0-SNAPSHOT-jar-with-dependencies.jar https://wiprodigital.com
+
+cat urls_wiprodigital.com.txt
 ```

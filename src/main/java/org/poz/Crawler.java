@@ -28,7 +28,7 @@ public class Crawler {
     }
 
     public Map<String, SitemapEntry> createSitemap() {
-
+        logger.info("Discovering links for {}", root_url);
         String entry_url = root_url;
         Map<String, SitemapEntry> sitemap = new HashMap<>();
 
@@ -43,11 +43,13 @@ public class Crawler {
             current_entry = pickUrlToVisit(sitemap);
             if (current_entry == null) break;
 
-
             try {
                 logger.info("Visiting {}", current_entry.getUrl());
+
                 current_entry.setVisited();
                 sitemap.replace(current_entry.getUrl(), current_entry);
+                //TODO url is set as visited even if Jsoup.cennect will fail to open HTML content
+
                 Document doc = Jsoup.connect(current_entry.getUrl()).get();
 
                 Elements links = doc.select("a[href]");
@@ -64,7 +66,8 @@ public class Crawler {
 
                 }
             } catch (IOException e) {
-                logger.warn("Got exception:", e);
+                logger.warn("Got exception: {}", e.getMessage());
+                logger.debug("Stack trace:", e);
 
             }
 
@@ -109,5 +112,8 @@ public class Crawler {
 
     }
 
+    public String getDomain() {
+        return domain;
+    }
 
 }
