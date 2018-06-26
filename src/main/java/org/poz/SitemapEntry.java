@@ -6,14 +6,21 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class SitemapEntry {
     private String url;
     private SitemapEntry parent;
-
+    private boolean visited;
+    private boolean external;
 
     public SitemapEntry(String url, SitemapEntry parent) {
         this.url = url;
         this.parent = parent;
-
+        this.visited = false;
     }
 
+    public SitemapEntry(String url, SitemapEntry parent, boolean external) {
+        this.url = url;
+        this.parent = parent;
+        this.visited = false;
+        this.external = external;
+    }
 
     public String getUrl() {
         return url;
@@ -23,7 +30,17 @@ public class SitemapEntry {
         return parent;
     }
 
+    public boolean isVisited() {
+        return visited;
+    }
 
+    public boolean isExternal() {
+        return external;
+    }
+
+    public void setVisited() {
+        this.visited = true;
+    }
 
 
     @Override
@@ -36,9 +53,6 @@ public class SitemapEntry {
         if (other == this) {
             return true;
         }
-        if ((other instanceof SitemapEntry) == false) {
-            return false;
-        }
-        return this.url.equals(((SitemapEntry)other).url);
+        return other instanceof SitemapEntry && this.url.equals(((SitemapEntry) other).url);
     }
 }
