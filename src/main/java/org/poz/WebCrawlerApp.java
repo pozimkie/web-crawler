@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class WebCrawlerApp {
 
-    private static String entry_url = "https://wiprodigital.com";
+    private static String entry_url;
 
     private static final Logger logger = LoggerFactory.getLogger(WebCrawlerApp.class);
 
@@ -19,7 +19,8 @@ public class WebCrawlerApp {
         Crawler mycrawler;
 
         try {
-
+            if (args.length == 0) throw new Exception("Input URL not provided!");
+            entry_url = args[0];
             mycrawler = new Crawler(entry_url);
             Map<String, SitemapEntry> sitemap = mycrawler.createSitemap();
 
